@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Blob : MonoBehaviour
 {
-    Animator animator;
-    float speed = 0.5f;
+    public Animator animator;
+    float speed = 1f;
     float turnSpeed = 0.2f;
 
     public Item equippedArmor;
@@ -14,19 +14,26 @@ public class Blob : MonoBehaviour
     Vector3 leftPortalPosition = new Vector3(-25, -9.5f, 0);
     Vector3 rightPortalPosition = new Vector3(25, -9.5f, 0);
 
+    [SerializeField] GameObject head;
+
     public float health = 1;
+
+    bool gameStarted = false;
     void Start()
     {
         animator = gameObject.GetComponent<Animator>();
-        goToShop();
     }
 
     void Update()
     {
-
+        if (gameStarted == false && Input.GetMouseButtonDown(0))
+        {
+            gameStarted = true;
+            goToShop();
+        }
     }
 
-    private void goToBattle()
+    public void goToBattle()
     {
         if(gameObject.tag == "Hero")
         {
@@ -38,7 +45,7 @@ public class Blob : MonoBehaviour
         }
     }
 
-    private void goToShop()
+    public void goToShop()
     {
         if(gameObject.tag == "Hero")
         {
@@ -54,6 +61,12 @@ public class Blob : MonoBehaviour
     {
         StartCoroutine(SmoothLerp(destination));
     }
+
+    public void stopMoving ()
+    {
+        StopCoroutine("SmoothLerp");
+        animator.SetBool("isWalking", false);
+    }
     private IEnumerator SmoothLerp(Vector3 destination)
     {
         Vector3 startingPosition = gameObject.transform.position;
@@ -65,9 +78,6 @@ public class Blob : MonoBehaviour
         {
             r += turnSpeed * Time.fixedDeltaTime;
             gameObject.transform.rotation = Quaternion.Lerp(startingAngle, finalAngle, r);
-
-            Debug.Log("ROTATING");
-
             yield return null;
         }
 
@@ -86,9 +96,21 @@ public class Blob : MonoBehaviour
         animator.SetBool("isWalking", false);
     }
 
-    public void equip(Item item)
+    public void equip(string itemName)
     {
-        if(item.type == ItemClass.)
+        GameObject baseItem = GameObject.Find(itemName);
+
+        GameObject item = GameObject.Instantiate<GameObject>(baseItem, gameObject.transform);
+
+        item.transform.parent = head.transform;
+
+        //if(item.itemType == ItemType.armor)
+       // {
+          //  equippedArmor = item;
+        //} else if(item.itemType == ItemType.weapon)
+        //{
+        //    equippedWeapon = item;
+        //}
     }
 
 }

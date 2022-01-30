@@ -23,14 +23,16 @@ public class Teleporter : MonoBehaviour
         
     }
 
-    public void OnTriggerEnter(Collider other)
+    public IEnumerator OnTriggerEnter(Collider other)
     {
         if(other.tag == "Hero" && tp == TeleporterPosition.left || other.tag == "Villain" && tp == TeleporterPosition.right)
         {
             Transform blobTransform = other.gameObject.transform;
             Blob blobScript = other.gameObject.GetComponent<Blob>();
-
-            blobScript.StopAllCoroutines();
+            while(blobScript.animator.GetBool("isWalking"))
+            {
+                yield return null;
+            }
             blobTransform.position = new Vector3(blobTransform.position.x, 10, -4);
             gameManager.shopWaitingList.Add(blobScript);
         }

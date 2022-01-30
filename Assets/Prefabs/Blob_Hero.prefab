@@ -300,7 +300,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 30a083bb38b412341b47aaa6b185c457, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -319,6 +319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfe4f64c6934ff409ee2c8bf5c103a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  equippedArmor: {fileID: 0}
+  equippedWeapon: {fileID: 0}
+  head: {fileID: 1942562573902726494}
   health: 1
 --- !u!1 &5079736423393204050
 GameObject:

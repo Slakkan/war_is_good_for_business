@@ -7,7 +7,10 @@ public class Game_Manager : MonoBehaviour
     public float duality = 50;
 
     public List<Blob> shopWaitingList = new List<Blob>();
-    bool isShopBusy = false;
+    public bool isShopBusy = false;
+
+    Vector3 leftShopPortalPosition = new Vector3(-25, -9.5f, 0);
+    Vector3 rightShopPortalPosition = new Vector3(25, -9.5f, 0);
     void Start()
     {
         
@@ -21,19 +24,33 @@ public class Game_Manager : MonoBehaviour
             isShopBusy = true;
             Blob nextCustomer = shopWaitingList[0];
             shopWaitingList.Remove(nextCustomer);
-            moveToShop(nextCustomer.gameObject);
+            StartCoroutine(moveToShop(nextCustomer.gameObject));
         }
     }
 
-
-
-    private void moveToShop(GameObject blob)
+    public void moveToBattlefield (GameObject blob)
     {
         Blob blobScript = blob.GetComponent<Blob>();
-        blobScript.StopAllCoroutines();
+        if (blob.tag == "Hero")
+        {
+            blobScript.moveTo(leftShopPortalPosition);
+        }
+         else if (blob.tag == "Villain")
+        {
+            blobScript.moveTo(rightShopPortalPosition);
+        }
+    }
+
+    private IEnumerator moveToShop(GameObject blob)
+    {
+        Blob blobScript = blob.GetComponent<Blob>();
 
         float finalX = blob.tag == "Hero" ? -5 : 5;
         Vector3 destination = new Vector3(finalX, 10, -4);
+        while (blobScript.animator.GetBool("isWalking"))
+        {
+            yield return null;
+        }
         blobScript.moveTo(destination);
     }
 }

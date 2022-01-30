@@ -8,9 +8,16 @@ public enum ItemClass
     warrior,
     wizard
 }
+
+public enum ItemType
+{
+    armor,
+    weapon
+}
 public class Item : MonoBehaviour
 {
-    public ItemClass type;
+    public ItemClass itemClass;
+    public ItemType itemType;
     void Start()
     {
         
