@@ -8,6 +8,9 @@ public class Blob : MonoBehaviour
     float speed = 0.5f;
     float turnSpeed = 0.2f;
 
+    public Item equippedArmor;
+    public Item equippedWeapon;
+
     Vector3 leftPortalPosition = new Vector3(-25, -9.5f, 0);
     Vector3 rightPortalPosition = new Vector3(25, -9.5f, 0);
 
