@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-enum ItemType
+public enum ItemClass
 {
     warrior,
     wizard
 }
 public class Item : MonoBehaviour
 {
-    [SerializeField] ItemType type;
+    public ItemClass type;
     void Start()
     {
         

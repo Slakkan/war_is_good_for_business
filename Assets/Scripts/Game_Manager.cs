@@ -16,35 +16,20 @@ public class Game_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(!isShopBusy && shopWaitingList.Count != 0)
         {
-            RaycastHit raycastHit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out raycastHit, 100f))
-            {
-                if (raycastHit.transform && raycastHit.transform.gameObject.tag == "Item")
-                {
-                    onItemClicked(raycastHit.transform.gameObject.GetComponent<Item>());
-                }
-            }
-        }
-
-        if(!isShopBusy)
-        {
-
+            isShopBusy = true;
+            Blob nextCustomer = shopWaitingList[0];
+            shopWaitingList.Remove(nextCustomer);
+            moveToShop(nextCustomer.gameObject);
         }
     }
 
 
-
-    private void onItemClicked (Item item)
-    {
-
-    }
 
     private void moveToShop(GameObject blob)
     {
-        Blob blobScript = blob.gameObject.GetComponent<Blob>();
+        Blob blobScript = blob.GetComponent<Blob>();
         blobScript.StopAllCoroutines();
 
         float finalX = blob.tag == "Hero" ? -5 : 5;

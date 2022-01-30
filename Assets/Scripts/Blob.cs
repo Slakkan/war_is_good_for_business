@@ -86,5 +86,9 @@ public class Blob : MonoBehaviour
         animator.SetBool("isWalking", false);
     }
 
+    public void equip(Item item)
+    {
+        if(item.type == ItemClass.)
+    }
 
 }
